@@ -3,428 +3,494 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STL — Desdobramento de Conteúdo</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<title>Gerador de Legendas — STL</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Montserrat:wght@300;400;500;600&display=swap');
 
-  :root {
-    --pink: #D4537E;
-    --pink-light: #FBEAF0;
-    --pink-border: #F4C0D1;
-    --pink-dark: #993556;
-    --text: #1a1a1a;
-    --text-muted: #6b6b6b;
-    --text-faint: #aaa;
-    --bg: #f9f7f5;
-    --surface: #ffffff;
-    --border: #e8e3de;
-    --border-strong: #d0cac4;
-    --radius: 12px;
-    --radius-sm: 8px;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #f7f5f2;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 32px 16px;
   }
 
-  body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
 
-  .top-bar {
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    padding: 16px 32px;
+  header { margin-bottom: 40px; }
+
+  .logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #E43E41;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #1a1a1a;
+    line-height: 1.2;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: #E43E41;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: #E43E41;
+    margin-top: 16px;
+  }
+
+  .form-section {
+    background: white;
+    border: 1px solid #e8e4df;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 8px;
+  }
+
+  select, textarea, input[type="text"] {
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #1a1a1a;
+    background: #f7f5f2;
+    border: 1px solid #e8e4df;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  select:focus, textarea:focus, input[type="text"]:focus {
+    border-color: #E43E41;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+    cursor: pointer;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+
+  .toggle {
     display: flex;
     align-items: center;
-    gap: 16px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 16px;
   }
 
-  .logo { font-weight: 700; font-size: 15px; letter-spacing: 2px; }
-  .top-bar-sub { font-size: 12px; color: var(--text-muted); border-left: 1px solid var(--border); padding-left: 16px; }
+  .toggle input { display: none; }
 
-  .main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; }
+  .toggle-track {
+    width: 36px;
+    height: 20px;
+    background: #e8e4df;
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
 
-  .page-title { font-family: 'Playfair Display', serif; font-size: 28px; font-style: italic; font-weight: 400; margin-bottom: 6px; }
-  .page-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 36px; }
+  .toggle input:checked + .toggle-track { background: #E43E41; }
 
-  .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
-  .form-card h3 { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
+  .toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
 
-  label { font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .toggle input:checked + .toggle-track .toggle-thumb {
+    transform: translateX(16px);
+  }
 
-  .colab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .toggle-label { font-size: 12px; color: #555; }
 
-  .colab-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px 18px; cursor: pointer; transition: border-color 0.2s, background 0.2s; user-select: none; }
-  .colab-card:hover { border-color: var(--pink); }
-  .colab-card.selected { border-color: var(--pink); background: var(--pink-light); }
-  .colab-card.selected .colab-name { color: var(--pink-dark); }
-  .colab-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-  .colab-arroba { font-size: 12px; color: var(--text-muted); }
+  .btn {
+    width: 100%;
+    padding: 14px;
+    background: #1a1a1a;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
 
-  textarea { width: 100%; font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; line-height: 1.65; resize: vertical; transition: border-color 0.2s; }
-  textarea:focus { outline: none; border-color: var(--pink); background: #fff; }
+  .btn:hover { background: #E43E41; }
+  .btn:disabled { background: #ccc; cursor: not-allowed; }
 
-  .btn { background: var(--pink); color: #fff; border: none; border-radius: var(--radius-sm); padding: 14px 24px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; width: 100%; transition: background 0.2s, transform 0.1s; }
-  .btn:hover { background: var(--pink-dark); }
-  .btn:active { transform: scale(0.99); }
-  .btn:disabled { background: var(--border-strong); color: var(--text-faint); cursor: not-allowed; transform: none; }
+  .section-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
 
-  .btn-outline { background: none; color: var(--pink); border: 1.5px solid var(--pink); border-radius: var(--radius-sm); padding: 11px 24px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; width: 100%; transition: background 0.2s; }
-  .btn-outline:hover { background: var(--pink-light); }
-  .btn-outline:disabled { opacity: 0.4; cursor: not-allowed; }
+  .char-count {
+    font-size: 11px;
+    color: #aaa;
+    text-align: right;
+    margin-top: 4px;
+  }
 
-  .loader { display: none; text-align: center; padding: 32px; font-size: 13px; color: var(--text-muted); }
-  .loader.show { display: block; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-  .pulse { animation: pulse 1.4s ease-in-out infinite; }
+  .results { display: none; margin-top: 24px; }
+  .results.visible { display: block; }
 
-  .erro-box { background: #FEF2F2; border: 1px solid #FECACA; border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #991B1B; display: none; }
+  .result-header {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8e4df;
+  }
 
-  .output { display: none; margin-top: 32px; }
+  .caption-card {
+    background: white;
+    border: 1px solid #e8e4df;
+    padding: 24px;
+    margin-bottom: 12px;
+  }
 
-  .out-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; }
-  .out-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--pink); margin-bottom: 16px; }
+  .caption-num {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #E43E41;
+    margin-bottom: 12px;
+  }
 
-  .title-row { margin-bottom: 14px; }
-  .title-sublabel { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-faint); margin-bottom: 4px; }
-  .title-value { font-size: 15px; font-weight: 600; line-height: 1.4; }
-  .title-value.sm { font-size: 14px; font-weight: 500; }
+  .caption-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #1a1a1a;
+    white-space: pre-wrap;
+  }
 
-  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
-  .badge { font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted); background: var(--bg); }
-  .badge.pink { background: var(--pink-light); border-color: var(--pink-border); color: var(--pink-dark); font-weight: 600; }
-  .badge.italic { font-style: italic; }
+  .copy-btn {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid #1a1a1a;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: all 0.2s;
+  }
 
-  .legenda-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .legenda-text { font-size: 14px; color: var(--text); line-height: 1.85; white-space: pre-wrap; padding-top: 14px; border-top: 1px solid var(--border); }
+  .copy-btn:hover { background: #1a1a1a; color: white; }
+  .copy-btn.copied { background: #E43E41; border-color: #E43E41; color: white; }
 
-  .copy-btn { font-size: 11px; font-family: 'Montserrat', sans-serif; font-weight: 600; background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 14px; cursor: pointer; color: var(--text-muted); transition: background 0.15s; }
-  .copy-btn:hover { background: var(--bg); }
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border: 1px solid #e8e4df;
+    margin-top: 24px;
+  }
 
-  .slides { display: flex; flex-direction: column; gap: 10px; }
-  .slide { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; background: var(--bg); }
-  .slide-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--pink); margin-bottom: 8px; }
-  .slide-text { font-size: 14px; line-height: 1.65; white-space: pre-wrap; }
-  .slide-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); gap: 12px; }
-  .slide-dica { font-size: 12px; color: var(--text-muted); font-style: italic; flex: 1; }
-  .chars { font-size: 11px; color: var(--text-faint); white-space: nowrap; flex-shrink: 0; }
-  .chars.over { color: #DC2626; font-weight: 600; }
+  .loading.visible { display: block; }
 
-  .check-line { font-size: 13px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
-  .check-line.ok { color: #166534; }
-  .check-line.warn { color: #92400E; }
+  .loading-text {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
 
-  /* Feedback */
-  .feedback-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; }
-  .feedback-section h3 { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
-  .feedback-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
-  .feedback-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-  .chip { font-size: 12px; font-family: 'Montserrat', sans-serif; padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg); color: var(--text-muted); cursor: pointer; transition: all 0.15s; user-select: none; }
-  .chip:hover { border-color: var(--pink); color: var(--pink); }
-  .chip.active { background: var(--pink-light); border-color: var(--pink); color: var(--pink-dark); font-weight: 600; }
-  .feedback-row { display: flex; gap: 10px; align-items: flex-start; }
-  .feedback-row textarea { flex: 1; min-height: 70px; font-size: 13px; }
-  .btn-refinar { background: var(--pink); color: #fff; border: none; border-radius: var(--radius-sm); padding: 12px 20px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.2s; flex-shrink: 0; }
-  .btn-refinar:hover { background: var(--pink-dark); }
-  .btn-refinar:disabled { background: var(--border-strong); color: var(--text-faint); cursor: not-allowed; }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
 
-  .versao-badge { display: inline-block; font-size: 10px; font-weight: 700; background: var(--pink-light); color: var(--pink-dark); border: 1px solid var(--pink-border); border-radius: 20px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.5px; }
+  .error {
+    display: none;
+    background: #fff5f5;
+    border: 1px solid #E43E41;
+    padding: 16px;
+    font-size: 13px;
+    color: #E43E41;
+    margin-top: 16px;
+  }
 
-  @media (max-width: 600px) {
-    .colab-grid { grid-template-columns: 1fr; }
-    .top-bar { padding: 14px 20px; }
-    .main { padding: 28px 16px 60px; }
-    .form-card, .out-section, .feedback-section { padding: 20px 16px; }
-    .page-title { font-size: 22px; }
-    .feedback-row { flex-direction: column; }
-    .btn-refinar { width: 100%; }
+  .error.visible { display: block; }
+
+  @media (max-width: 500px) {
+    .row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
+<div class="container">
+  <header>
+    <div class="logo">Steal The Look</div>
+    <h1>Gerador de <em>Legendas</em></h1>
+    <div class="divider"></div>
+  </header>
 
-<div class="top-bar">
-  <div class="logo">STEAL THE LOOK</div>
-  <div class="top-bar-sub">desdobramento de conteúdo</div>
-</div>
+  <div class="form-section">
+    <div class="section-title">Sobre o conteúdo</div>
 
-<div class="main">
-  <div class="page-title">desdobramento de conteúdo</div>
-  <p class="page-sub">Selecione a colaboradora, cole o texto e gere título, carrossel e legenda no padrão STL.</p>
-
-  <div class="form-card">
-    <h3>colaboradora</h3>
-    <div class="colab-grid">
-      <div class="colab-card" id="card-roberta" onclick="selecionarColab('roberta')">
-        <div class="colab-name">Roberta Weber</div>
-        <div class="colab-arroba">@robertaweber</div>
+    <div class="row">
+      <div class="field">
+        <label>Formato</label>
+        <select id="format">
+          <option value="">Selecione</option>
+          <option value="carrossel">Carrossel</option>
+          <option value="vídeo">Vídeo</option>
+          <option value="foto única">Foto única</option>
+          <option value="reels">Reels</option>
+        </select>
       </div>
-      <div class="colab-card" id="card-miriam" onclick="selecionarColab('miriam')">
-        <div class="colab-name">Miriam Spritzer</div>
-        <div class="colab-arroba">@mispritzer</div>
+      <div class="field">
+        <label>Categoria</label>
+        <select id="category">
+          <option value="">Selecione</option>
+          <option value="moda">Moda</option>
+          <option value="beleza">Beleza</option>
+          <option value="tendência">Tendência</option>
+          <option value="comportamento">Comportamento</option>
+          <option value="lifestyle">Lifestyle</option>
+          <option value="celebridade">Celebridade</option>
+          <option value="tapete vermelho">Tapete vermelho</option>
+          <option value="podcast">Podcast</option>
+          <option value="bastidores STL">Bastidores STL</option>
+        </select>
       </div>
+    </div>
+
+    <div class="field">
+      <label>Resumo do conteúdo</label>
+      <textarea id="content" placeholder="Descreva o conteúdo do post. A legenda deve apoiar, não repetir."></textarea>
+      <div class="char-count" id="charCount">0 caracteres</div>
+    </div>
+
+    <div class="field">
+      <label>CTA</label>
+      <select id="cta">
+        <option value="">Selecione</option>
+        <option value="engajamento nos comentários">Engajamento nos comentários</option>
+        <option value="link na bio">Link na bio</option>
+        <option value="comentar para receber o link por DM">Comentar para receber link por DM</option>
+        <option value="assinar newsletter">Assinar newsletter</option>
+        <option value="sem CTA">Sem CTA</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Pergunta para engajamento (opcional)</label>
+      <input type="text" id="question" placeholder="Ex: Você já apostaria nessa tendência?">
     </div>
   </div>
 
-  <div class="form-card">
-    <h3>texto da colaboradora</h3>
-    <textarea id="texto" rows="12" placeholder="Cole aqui o texto completo enviado pela colaboradora..."></textarea>
+  <div class="form-section">
+    <div class="section-title">Detalhes</div>
+
+    <label class="toggle">
+      <input type="checkbox" id="hasCollaborator">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      <span class="toggle-label">Post com colaboradora</span>
+    </label>
+
+    <div class="field" id="collaboratorField" style="display:none">
+      <label>@ da colaboradora</label>
+      <input type="text" id="collaborator" placeholder="@handle">
+    </div>
+
+    <div class="field">
+      <label>Contexto adicional (opcional)</label>
+      <input type="text" id="context" placeholder="Ex: aproveitar lançamento de filme, Dia da Mulher...">
+    </div>
+
+    <div class="field">
+      <label>Tom</label>
+      <select id="tone">
+        <option value="padrão STL">Padrão STL</option>
+        <option value="mais humorístico">Mais humorístico</option>
+        <option value="mais informativo">Mais informativo</option>
+        <option value="mais emocional">Mais emocional</option>
+      </select>
+    </div>
   </div>
 
-  <button class="btn" id="btn-gerar" onclick="gerarDesdobramento()">Gerar desdobramento</button>
+  <button class="btn" id="generateBtn" onclick="generate()">Gerar legendas</button>
 
-  <div class="erro-box" id="erro-box"></div>
-  <div class="loader" id="loader"><span class="pulse">Analisando e gerando desdobramento...</span></div>
+  <div class="loading" id="loading">
+    <div class="loading-text">Gerando legendas...</div>
+  </div>
 
-  <div class="output" id="output">
+  <div class="error" id="error"></div>
 
-    <div class="out-section">
-      <div class="out-label">Títulos <span class="versao-badge" id="versao-badge">v1</span></div>
-      <div id="box-titulo"></div>
-      <div class="badges" id="box-badges"></div>
-    </div>
-
-    <div class="out-section">
-      <div class="legenda-header">
-        <div class="out-label" style="margin-bottom:0;">Legenda do Instagram</div>
-        <button class="copy-btn" onclick="copiarLegenda()">copiar</button>
-      </div>
-      <div class="legenda-text" id="legenda-text"></div>
-    </div>
-
-    <div class="out-section">
-      <div class="out-label">Telas do carrossel</div>
-      <div class="slides" id="slides"></div>
-      <div class="check-line" id="check-cta"></div>
-    </div>
-
-    <!-- FEEDBACK -->
-    <div class="feedback-section">
-      <h3>Refinar resultado</h3>
-      <p class="feedback-desc">Não ficou do jeito que queria? Selecione o que quer melhorar e clique em refinar.</p>
-
-      <div class="feedback-chips">
-        <div class="chip" onclick="toggleChip(this)" data-val="quero um texto mais completo e detalhado em cada tela">texto mais completo</div>
-        <div class="chip" onclick="toggleChip(this)" data-val="quero mais detalhes de arte e sugestões visuais para cada tela">mais detalhes de arte</div>
-        <div class="chip" onclick="toggleChip(this)" data-val="o título da capa não tem gancho suficiente, quero opções mais criativas e impactantes">título mais criativo</div>
-        <div class="chip" onclick="toggleChip(this)" data-val="a legenda está muito formal, quero um tom mais coloquial e próximo">legenda mais coloquial</div>
-        <div class="chip" onclick="toggleChip(this)" data-val="quero mais telas, o conteúdo pode ser mais aprofundado">mais telas</div>
-        <div class="chip" onclick="toggleChip(this)" data-val="quero menos telas, mais direto ao ponto">menos telas</div>
-        <div class="chip" onclick="toggleChip(this)" data-val="o CTA da última tela pode ser mais engajador">CTA mais forte</div>
-      </div>
-
-      <div class="feedback-row">
-        <textarea id="feedback-texto" rows="2" placeholder="Ou escreva um pedido livre aqui... ex: 'deixa o tom mais bem-humorado'"></textarea>
-        <button class="btn-refinar" id="btn-refinar" onclick="refinarDesdobramento()">Refinar ↗</button>
-      </div>
-    </div>
-
+  <div class="results" id="results">
+    <div class="result-header">3 opções de legenda</div>
+    <div id="captionCards"></div>
   </div>
 </div>
 
 <script>
-  let colabSelecionada = null;
-  let legendaRaw = "";
-  let versao = 1;
-  let historicoMensagens = [];
+  document.getElementById('hasCollaborator').addEventListener('change', function() {
+    document.getElementById('collaboratorField').style.display = this.checked ? 'block' : 'none';
+  });
 
-  const COLABS = {
-    roberta: { nome: "Roberta Weber", arroba: "@robertaweber" },
-    miriam:  { nome: "Miriam Spritzer", arroba: "@mispritzer" }
-  };
+  document.getElementById('content').addEventListener('input', function() {
+    document.getElementById('charCount').textContent = this.value.length + ' caracteres';
+  });
 
-  const SYSTEM_PROMPT = `Você é a equipe editorial do Steal The Look (STL), plataforma brasileira de moda e beleza. Sua função é desdobrar textos de colaboradoras em carrosseis para Instagram + legenda, seguindo rigorosamente o manual de redação e estilo do STL.
-
-REGRAS GERAIS:
-- Tom: coloquial, feminino, engajador. Use "pra" (não "para"), linguagem próxima
-- Tudo minúsculo, exceto nomes próprios e marcas
-- Hashtag orgânica: #STEALTHELOOK
-
-REGRAS DO CARROSSEL:
-- Analise o texto e proponha o número ideal de telas (entre 8 e 15). Justifique em "justificativa_telas"
-- Máximo 450 caracteres por tela
-- Negrito em frases de impacto (usar **texto**)
-- Capa: título com gancho forte ou número, máx 80 chars, tudo minúsculo exceto nomes próprios
-- Arco: contexto → desenvolvimento → conexão com o cotidiano da leitora
-- Última tela: fechamento reflexivo + CTA (salve, arraste, comente)
-- Cada tela deve ter uma dica visual detalhada de arte (tipo de imagem, enquadramento, referência visual)
-
-REGRAS DA LEGENDA:
-- Máximo 3 parágrafos curtos, tom coloquial
-- 1º parágrafo: gancho instigante sobre o tema
-- 2º parágrafo: apresenta a colaboradora — nome e arroba — de forma natural
-- 3º parágrafo: CTA + pergunta retórica relacionada ao tema
-- Finalizar com #STEALTHELOOK
-
-Responda APENAS em JSON válido, sem markdown, sem backticks:
-{"titulo_site":"...","titulo_feed":"...","total_telas":10,"justificativa_telas":"...","palavra_manychat":"...","hashtag":"#STEALTHELOOK","legenda":"...\\n\\n...\\n\\n...","telas":[{"tela":"capa","tipo":"capa","texto":"...","dica":"..."},{"tela":"1","tipo":"contexto","texto":"...","dica":"..."}]}`;
-
-  function selecionarColab(id) {
-    colabSelecionada = id;
-    document.querySelectorAll(".colab-card").forEach(c => c.classList.remove("selected"));
-    document.getElementById("card-" + id).classList.add("selected");
-  }
-
-  function toggleChip(el) {
-    el.classList.toggle("active");
-  }
-
-  function mostrarErro(msg) {
-    const el = document.getElementById("erro-box");
-    el.textContent = msg;
-    el.style.display = "block";
-  }
-
-  function setLoading(loading) {
-    document.getElementById("btn-gerar").disabled = loading;
-    document.getElementById("btn-refinar").disabled = loading;
-    document.getElementById("loader").classList.toggle("show", loading);
-    document.getElementById("erro-box").style.display = "none";
-  }
-
-  async function chamarAPI(mensagens) {
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4000,
-        system: SYSTEM_PROMPT,
-        messages: mensagens
-      })
-    });
-
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      throw new Error(err?.error?.message || "status " + response.status);
-    }
-
-    const data = await response.json();
-    const raw = data.content.map(i => i.text || "").join("");
-    const clean = raw.replace(/```json|```/g, "").trim();
-    return { parsed: JSON.parse(clean), raw };
-  }
-
-  async function gerarDesdobramento() {
-    const texto = document.getElementById("texto").value.trim();
-    if (!colabSelecionada) { alert("Selecione a colaboradora."); return; }
-    if (texto.length < 100) { alert("Cole um texto mais completo para gerar o desdobramento."); return; }
-
-    const colab = COLABS[colabSelecionada];
-    versao = 1;
-    historicoMensagens = [];
-
-    setLoading(true);
-    document.getElementById("output").style.display = "none";
-
-    const userMsg = `Colaboradora: ${colab.nome} (${colab.arroba})\n\nTEXTO:\n${texto}`;
-    historicoMensagens.push({ role: "user", content: userMsg });
-
-    try {
-      const { parsed, raw } = await chamarAPI(historicoMensagens);
-      historicoMensagens.push({ role: "assistant", content: raw });
-      renderOutput(parsed, colab);
-    } catch (err) {
-      mostrarErro("Erro: " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function refinarDesdobramento() {
-    const chipsAtivos = [...document.querySelectorAll(".chip.active")].map(c => c.dataset.val);
-    const textoLivre = document.getElementById("feedback-texto").value.trim();
-
-    if (chipsAtivos.length === 0 && !textoLivre) {
-      alert("Selecione pelo menos uma opção de melhoria ou escreva um pedido.");
+  async function generate() {
+    const content = document.getElementById('content').value.trim();
+    if (!content) {
+      showError('Descreva o conteúdo do post antes de gerar.');
       return;
     }
 
-    const colab = COLABS[colabSelecionada];
-    const partes = [...chipsAtivos];
-    if (textoLivre) partes.push(textoLivre);
-    const feedbackMsg = "Por favor, refine o desdobramento com os seguintes ajustes:\n- " + partes.join("\n- ");
+    const body = {
+      format: document.getElementById('format').value,
+      category: document.getElementById('category').value,
+      content,
+      cta: document.getElementById('cta').value,
+      question: document.getElementById('question').value.trim(),
+      hasCollaborator: document.getElementById('hasCollaborator').checked,
+      collaborator: document.getElementById('collaborator').value.trim(),
+      context: document.getElementById('context').value.trim(),
+      tone: document.getElementById('tone').value
+    };
 
-    historicoMensagens.push({ role: "user", content: feedbackMsg });
-
-    setLoading(true);
+    hideError();
+    showLoading();
+    hideResults();
+    document.getElementById('generateBtn').disabled = true;
 
     try {
-      const { parsed, raw } = await chamarAPI(historicoMensagens);
-      historicoMensagens.push({ role: "assistant", content: raw });
-      versao++;
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
 
-      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-      document.getElementById("feedback-texto").value = "";
+      const data = await response.json();
 
-      renderOutput(parsed, colab);
+      if (!response.ok) throw new Error(data.error || 'Erro ao gerar legendas.');
+
+      const options = parseOptions(data.result);
+      showResults(options);
     } catch (err) {
-      mostrarErro("Erro ao refinar: " + err.message);
-      historicoMensagens.pop();
+      showError(err.message || 'Erro ao gerar legendas. Tente novamente.');
     } finally {
-      setLoading(false);
+      hideLoading();
+      document.getElementById('generateBtn').disabled = false;
     }
   }
 
-  function renderOutput(data, colab) {
-    document.getElementById("versao-badge").textContent = "v" + versao;
+  function parseOptions(text) {
+    const options = [];
+    const parts = text.split(/OPÇÃO\s+\d+/i).filter(p => p.trim());
+    parts.forEach(part => {
+      const clean = part.replace(/^[\s:—\-]+/, '').trim();
+      if (clean) options.push(clean);
+    });
+    return options.length > 0 ? options : [text];
+  }
 
-    document.getElementById("box-titulo").innerHTML = `
-      <div class="title-row">
-        <div class="title-sublabel">Título para o site</div>
-        <div class="title-value">${data.titulo_site || ""}</div>
-      </div>
-      <div class="title-row" style="margin-bottom:0;">
-        <div class="title-sublabel">Título do feed / capa</div>
-        <div class="title-value sm">${data.titulo_feed || ""}</div>
-      </div>
-    `;
-
-    document.getElementById("box-badges").innerHTML = `
-      <span class="badge pink">${colab.nome}</span>
-      <span class="badge">${data.total_telas || data.telas?.length} telas</span>
-      <span class="badge">manychat: <strong>${data.palavra_manychat || ""}</strong></span>
-      <span class="badge">${data.hashtag || "#STEALTHELOOK"}</span>
-      ${data.justificativa_telas ? `<span class="badge italic">${data.justificativa_telas}</span>` : ""}
-    `;
-
-    legendaRaw = data.legenda || "";
-    document.getElementById("legenda-text").textContent = legendaRaw;
-
-    const slidesEl = document.getElementById("slides");
-    slidesEl.innerHTML = "";
-    (data.telas || []).forEach(t => {
-      const chars = (t.texto || "").length;
-      const over = chars > 450;
-      const div = document.createElement("div");
-      div.className = "slide";
-      div.innerHTML = `
-        <div class="slide-label">${t.tela === "capa" ? "capa" : "tela " + t.tela}${t.tipo ? " · " + t.tipo : ""}</div>
-        <div class="slide-text">${(t.texto || "").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
-        <div class="slide-footer">
-          ${t.dica ? `<div class="slide-dica">💡 ${t.dica}</div>` : "<div></div>"}
-          <div class="chars ${over ? "over" : ""}">${chars}/450${over ? " ⚠" : ""}</div>
-        </div>
+  function showResults(options) {
+    const container = document.getElementById('captionCards');
+    container.innerHTML = '';
+    options.forEach((opt, i) => {
+      const card = document.createElement('div');
+      card.className = 'caption-card';
+      const textId = 'caption-' + i;
+      card.innerHTML = `
+        <div class="caption-num">Opção ${i + 1}</div>
+        <div class="caption-text" id="${textId}">${opt}</div>
+        <button class="copy-btn" onclick="copyText(this, '${textId}')">Copiar</button>
       `;
-      slidesEl.appendChild(div);
+      container.appendChild(card);
     });
-
-    const ultima = data.telas?.[data.telas.length - 1];
-    const temCta = ultima?.texto && /salve|arraste|coment/i.test(ultima.texto);
-    const ctaEl = document.getElementById("check-cta");
-    ctaEl.className = "check-line " + (temCta ? "ok" : "warn");
-    ctaEl.textContent = temCta ? "✓ CTA detectado na última tela" : "⚠ Verifique se a última tela tem um CTA claro";
-
-    document.getElementById("output").style.display = "block";
-    document.getElementById("output").scrollIntoView({ behavior: "smooth" });
+    document.getElementById('results').classList.add('visible');
   }
 
-  function copiarLegenda() {
-    navigator.clipboard.writeText(legendaRaw).then(() => {
-      const btn = document.querySelector(".copy-btn");
-      btn.textContent = "copiado!";
-      setTimeout(() => btn.textContent = "copiar", 2000);
+  function copyText(btn, textId) {
+    const text = document.getElementById(textId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copiado!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copiar';
+        btn.classList.remove('copied');
+      }, 2000);
     });
   }
+
+  function showLoading() { document.getElementById('loading').classList.add('visible'); }
+  function hideLoading() { document.getElementById('loading').classList.remove('visible'); }
+  function showError(msg) {
+    const el = document.getElementById('error');
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+  function hideError() { document.getElementById('error').classList.remove('visible'); }
+  function hideResults() { document.getElementById('results').classList.remove('visible'); }
 </script>
 </body>
 </html>

@@ -55,18 +55,13 @@
   /* Títulos */
   .titulos-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; }
   .titulos-card h3 { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
-
   .titulo-secao { margin-bottom: 20px; }
-  .titulo-secao:last-child { margin-bottom: 0; }
+  .titulo-secao:last-of-type { margin-bottom: 0; }
   .titulo-secao-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--pink); margin-bottom: 10px; }
-
-  .titulo-opcao { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .titulo-opcao { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; }
   .titulo-opcao:last-child { margin-bottom: 0; }
-  .titulo-opcao:hover { border-color: var(--pink); background: var(--pink-light); }
-  .titulo-opcao.selecionado { border-color: var(--pink); background: var(--pink-light); }
-  .titulo-num { font-size: 10px; font-weight: 700; color: var(--text-faint); min-width: 16px; padding-top: 2px; }
-  .titulo-opcao.selecionado .titulo-num { color: var(--pink); }
-  .titulo-texto { font-size: 13px; color: var(--text); line-height: 1.4; flex: 1; }
+  .titulo-num { font-size: 10px; font-weight: 700; color: var(--text-faint); min-width: 16px; padding-top: 2px; flex-shrink: 0; }
+  .titulo-texto { font-size: 13px; color: var(--text); line-height: 1.45; flex: 1; }
   .titulo-copy { font-size: 10px; font-family: 'Montserrat', sans-serif; background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: 3px 8px; cursor: pointer; color: var(--text-faint); white-space: nowrap; flex-shrink: 0; }
   .titulo-copy:hover { background: var(--bg); color: var(--text-muted); }
 
@@ -74,13 +69,13 @@
   .pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted); }
   .pill.pink { background: var(--pink-light); border-color: var(--pink-border); color: var(--pink-dark); font-weight: 600; }
 
-  /* Blocos copiáveis */
+  /* Bloco copiável */
   .bloco-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
   .bloco-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); }
   .bloco-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--pink); }
   .copy-btn { font-size: 11px; font-family: 'Montserrat', sans-serif; font-weight: 600; background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 4px 12px; cursor: pointer; color: var(--text-muted); }
   .copy-btn:hover { background: var(--bg); }
-  .bloco-textarea { width: 100%; font-family: 'Montserrat', sans-serif; font-size: 13.5px; color: var(--text); background: var(--surface); border: none; padding: 20px; line-height: 1.8; resize: none; outline: none; display: block; }
+  .bloco-textarea { width: 100%; font-family: 'Montserrat', sans-serif; font-size: 13.5px; color: var(--text); background: var(--surface); border: none; padding: 20px; line-height: 1.85; resize: none; outline: none; display: block; }
 
   /* Feedback */
   .feedback-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; }
@@ -150,17 +145,14 @@
 
     <div class="titulos-card">
       <h3>Títulos</h3>
-
       <div class="titulo-secao">
         <div class="titulo-secao-label">Feed / Capa do carrossel</div>
         <div id="titulos-feed"></div>
       </div>
-
       <div class="titulo-secao">
         <div class="titulo-secao-label">Site (SEO)</div>
         <div id="titulos-site"></div>
       </div>
-
       <div class="meta-pills" id="meta-pills"></div>
     </div>
 
@@ -219,26 +211,36 @@ Mantenha o tom de voz e o texto original. Não reescreva — ajuste para caber n
 
 TÍTULOS:
 Gere 5 opções de título para o feed e 5 opções para o site. Cada conjunto deve variar em abordagem:
-- Feed: títulos diretos, com gancho, que chamem atenção no Instagram. Podem usar dois-pontos, número ou pergunta. Sem ponto de exclamação. Primeira letra maiúscula, restante conforme norma culta
+- Feed: títulos diretos, com gancho, que chamem atenção no Instagram. Podem usar dois-pontos, número ou pergunta. Sem ponto de exclamação. Primeira letra maiúscula
 - Site (SEO): títulos descritivos, com palavra-chave clara, que funcionem bem em buscas. Primeira letra maiúscula
 
 FORMATO DE SAÍDA DO CARROSSEL:
-Bloco de texto corrido, com cada tela separada por uma linha em branco. Sem divisores, bullets, numeração ou marcação visual. Cada tela tem:
-- Uma linha de subtítulo em maiúsculas (quando há mudança de assunto) — opcional
-- O texto em prosa, começando com letra maiúscula
+O carrossel deve ser entregue como um bloco de texto corrido. Cada tela é separada por uma linha em branco e segue esta estrutura de hierarquia:
 
-Exemplo:
-A NOVA ORDEM DAS MAISONS
-O ano passado foi das estreias, mas 2026 será sobre consolidação. Depois de um 2025 repleto de mudanças, o foco agora é observar como os novos diretores criativos vão se adaptar.
+[TELA N — TEMA] (use tema em maiúsculas quando há mudança de assunto; omita se não houver)
+Título: frase curta de gancho que ancora a tela — sempre presente
+Subtítulo: complemento opcional quando o título precisa de mais camada — omita se não for necessário
+Texto em prosa corrida, começando com letra maiúscula, fiel ao original.
 
-Além disso, após a passagem relâmpago de Dario Vitale na Versace, a especulação sobre quem vai assumir a direção criativa segue em alta.
+Exemplo de saída:
 
-CENÁRIO ECONÔMICO
-Segundo o State of Fashion da McKinsey, o crescimento global da indústria de moda para 2026 deve ser abaixo do esperado.
+[CAPA]
+Título: Nó chinês: o fechamento histórico que voltou a dominar as jaquetas em 2026
+
+[TELA 1]
+Título: A tendência que você vai ver em todo lugar
+O fechamento conhecido como nó chinês, ou frog closure em inglês, volta com tudo em 2026. O retorno é fruto do fascínio cada vez mais forte por vintage e do aumento de referências históricas nas passarelas.
+
+[TELA 2 — ORIGEM]
+Título: Mas afinal, de onde surgiu?
+Subtítulo: Uma história que vem da dinastia Qing
+Original da China, o nó é parte indissociável do vestuário tradicional chinês, presente em qipaos e roupas da dinastia Qing. Oficialmente chamado de Pankou, o fechamento transcende o impacto decorativo, sendo parte estrutural da roupa e símbolo de status e refinamento.
 
 REGRAS DO CARROSSEL:
-- Analise o texto e proponha o número ideal de telas (entre 8 e 15). Justifique em justificativa_telas
-- Máximo 450 caracteres por tela (sem contar o subtítulo)
+- Analise o texto e proponha o número ideal de telas (entre 8 e 15) com base nos blocos temáticos naturais. Justifique em justificativa_telas
+- Máximo 450 caracteres por tela (sem contar título e subtítulo)
+- Título sempre presente em todas as telas, inclusive na capa
+- Subtítulo apenas quando o título precisa de complemento ou quando o conteúdo tem duas camadas de informação
 - Sem emojis, sem bullet points, sem listas
 - Arco: contexto → desenvolvimento → fechamento com reflexão + CTA
 - Última tela: fechamento natural + CTA sem emoji (ex: "Salve pra ver depois", "Arraste e leia")
@@ -254,12 +256,12 @@ REGRAS DA LEGENDA:
 
 Responda APENAS em JSON válido, sem markdown, sem backticks:
 {
-  "titulos_feed": ["opção 1", "opção 2", "opção 3", "opção 4", "opção 5"],
-  "titulos_site": ["opção 1", "opção 2", "opção 3", "opção 4", "opção 5"],
+  "titulos_feed": ["opção 1","opção 2","opção 3","opção 4","opção 5"],
+  "titulos_site": ["opção 1","opção 2","opção 3","opção 4","opção 5"],
   "total_telas": 10,
   "justificativa_telas": "...",
   "palavra_manychat": "...",
-  "carrossel": "bloco de texto corrido com todas as telas",
+  "carrossel": "bloco completo com todas as telas no formato descrito acima",
   "legenda": "parágrafo 1\\n\\nparágrafo 2\\n\\nparágrafo 3\\n\\n#STEALTHELOOK"
 }`;
 
@@ -372,7 +374,7 @@ function renderTitulos(containerId, lista) {
     div.innerHTML = `
       <div class="titulo-num">${i + 1}</div>
       <div class="titulo-texto">${t}</div>
-      <button class="titulo-copy" onclick="copiarTexto(event, '${t.replace(/'/g, "\\'")}')">copiar</button>
+      <button class="titulo-copy" onclick="copiarTexto(event, ${JSON.stringify(t)})">copiar</button>
     `;
     el.appendChild(div);
   });
@@ -394,7 +396,7 @@ function render(data, autor) {
 
   const carrosselEl = document.getElementById("carrossel-texto");
   carrosselEl.value = data.carrossel || "";
-  carrosselEl.rows = Math.max(12, (data.carrossel || "").split("\n").length + 4);
+  carrosselEl.rows = Math.max(16, (data.carrossel || "").split("\n").length + 4);
 
   const legendaEl = document.getElementById("legenda-texto");
   legendaEl.value = data.legenda || "";

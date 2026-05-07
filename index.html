@@ -26,15 +26,15 @@
   .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
   .form-card h3 { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
 
-  label { font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-  .colab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .colab-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px 18px; cursor: pointer; transition: border-color 0.2s, background 0.2s; user-select: none; }
-  .colab-card:hover { border-color: var(--pink); }
-  .colab-card.selected { border-color: var(--pink); background: var(--pink-light); }
-  .colab-card.selected .colab-name { color: var(--pink-dark); }
-  .colab-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-  .colab-arroba { font-size: 12px; color: var(--text-muted); }
+  .autor-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .autor-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s; user-select: none; }
+  .autor-card:hover { border-color: var(--pink); }
+  .autor-card.selected { border-color: var(--pink); background: var(--pink-light); }
+  .autor-card.selected .autor-name { color: var(--pink-dark); }
+  .autor-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .autor-sub { font-size: 11px; color: var(--text-muted); }
+  .autor-card.stl { border-style: dashed; }
+  .autor-card.stl.selected { border-style: solid; }
 
   textarea { width: 100%; font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; line-height: 1.65; resize: vertical; transition: border-color 0.2s; }
   textarea:focus { outline: none; border-color: var(--pink); background: #fff; }
@@ -52,35 +52,37 @@
 
   .output { display: none; margin-top: 32px; }
 
-  .out-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
+  /* Títulos */
+  .titulos-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; }
+  .titulos-card h3 { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
 
-  .out-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); gap: 16px; }
-  .out-header-info { flex: 1; }
-  .out-header-info h2 { font-size: 17px; font-weight: 700; line-height: 1.35; margin-bottom: 4px; }
-  .out-header-info .subtitulo { font-size: 12px; color: var(--text-muted); }
-  .meta-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .titulo-secao { margin-bottom: 20px; }
+  .titulo-secao:last-child { margin-bottom: 0; }
+  .titulo-secao-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--pink); margin-bottom: 10px; }
+
+  .titulo-opcao { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .titulo-opcao:last-child { margin-bottom: 0; }
+  .titulo-opcao:hover { border-color: var(--pink); background: var(--pink-light); }
+  .titulo-opcao.selecionado { border-color: var(--pink); background: var(--pink-light); }
+  .titulo-num { font-size: 10px; font-weight: 700; color: var(--text-faint); min-width: 16px; padding-top: 2px; }
+  .titulo-opcao.selecionado .titulo-num { color: var(--pink); }
+  .titulo-texto { font-size: 13px; color: var(--text); line-height: 1.4; flex: 1; }
+  .titulo-copy { font-size: 10px; font-family: 'Montserrat', sans-serif; background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: 3px 8px; cursor: pointer; color: var(--text-faint); white-space: nowrap; flex-shrink: 0; }
+  .titulo-copy:hover { background: var(--bg); color: var(--text-muted); }
+
+  .meta-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
   .pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted); }
   .pill.pink { background: var(--pink-light); border-color: var(--pink-border); color: var(--pink-dark); font-weight: 600; }
 
-  .copy-all-btn { flex-shrink: 0; font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 600; background: none; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); padding: 8px 16px; cursor: pointer; color: var(--text-muted); white-space: nowrap; }
-  .copy-all-btn:hover { background: var(--bg); }
+  /* Blocos copiáveis */
+  .bloco-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
+  .bloco-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+  .bloco-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--pink); }
+  .copy-btn { font-size: 11px; font-family: 'Montserrat', sans-serif; font-weight: 600; background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 4px 12px; cursor: pointer; color: var(--text-muted); }
+  .copy-btn:hover { background: var(--bg); }
+  .bloco-textarea { width: 100%; font-family: 'Montserrat', sans-serif; font-size: 13.5px; color: var(--text); background: var(--surface); border: none; padding: 20px; line-height: 1.8; resize: none; outline: none; display: block; }
 
-  .telas-wrap { display: flex; flex-direction: column; }
-  .tela-item { padding: 16px 0; border-bottom: 1px solid var(--border); }
-  .tela-item:last-child { border-bottom: none; }
-  .tela-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .tela-num { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--pink); }
-  .tela-chars { font-size: 11px; color: var(--text-faint); }
-  .tela-chars.over { color: #DC2626; font-weight: 600; }
-  .tela-subtitulo { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-  .tela-texto { font-size: 14px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
-
-  .legenda-wrap { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
-  .legenda-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--pink); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-  .copy-leg-btn { font-size: 11px; font-family: 'Montserrat', sans-serif; font-weight: 600; background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 4px 12px; cursor: pointer; color: var(--text-muted); }
-  .copy-leg-btn:hover { background: var(--bg); }
-  .legenda-texto { font-size: 14px; color: var(--text); line-height: 1.8; white-space: pre-wrap; }
-
+  /* Feedback */
   .feedback-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; }
   .feedback-card h3 { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
   .feedback-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
@@ -96,12 +98,11 @@
   .versao-tag { font-size: 10px; font-weight: 600; background: var(--pink-light); color: var(--pink-dark); border: 1px solid var(--pink-border); border-radius: 20px; padding: 2px 8px; margin-left: 8px; }
 
   @media (max-width: 600px) {
-    .colab-grid { grid-template-columns: 1fr; }
+    .autor-grid { grid-template-columns: 1fr; }
     .top-bar { padding: 14px 20px; }
     .main { padding: 28px 16px 60px; }
-    .form-card, .out-card, .feedback-card { padding: 20px 16px; }
+    .form-card, .titulos-card, .feedback-card { padding: 20px 16px; }
     .page-title { font-size: 22px; }
-    .out-header { flex-direction: column; }
     .fb-row { flex-direction: column; }
     .btn-refinar { width: 100%; }
   }
@@ -116,25 +117,29 @@
 
 <div class="main">
   <div class="page-title">desdobramento de conteúdo</div>
-  <p class="page-sub">Selecione a colaboradora, cole o texto e gere o desdobramento no padrão STL.</p>
+  <p class="page-sub">Selecione a autoria, cole o texto e gere o desdobramento no padrão STL.</p>
 
   <div class="form-card">
-    <h3>colaboradora</h3>
-    <div class="colab-grid">
-      <div class="colab-card" id="card-roberta" onclick="sel('roberta')">
-        <div class="colab-name">Roberta Weber</div>
-        <div class="colab-arroba">@robertaweber</div>
+    <h3>autoria</h3>
+    <div class="autor-grid">
+      <div class="autor-card stl" id="card-stl" onclick="sel('stl')">
+        <div class="autor-name">Steal The Look</div>
+        <div class="autor-sub">conteúdo proprietário</div>
       </div>
-      <div class="colab-card" id="card-miriam" onclick="sel('miriam')">
-        <div class="colab-name">Miriam Spritzer</div>
-        <div class="colab-arroba">@mispritzer</div>
+      <div class="autor-card" id="card-roberta" onclick="sel('roberta')">
+        <div class="autor-name">Roberta Weber</div>
+        <div class="autor-sub">@robertaweber</div>
+      </div>
+      <div class="autor-card" id="card-miriam" onclick="sel('miriam')">
+        <div class="autor-name">Miriam Spritzer</div>
+        <div class="autor-sub">@mispritzer</div>
       </div>
     </div>
   </div>
 
   <div class="form-card">
-    <h3>texto da colaboradora</h3>
-    <textarea id="texto" rows="12" placeholder="Cole aqui o texto completo enviado pela colaboradora..."></textarea>
+    <h3>texto</h3>
+    <textarea id="texto" rows="12" placeholder="Cole aqui o texto completo..."></textarea>
   </div>
 
   <button class="btn" id="btn-gerar" onclick="gerar()">Gerar desdobramento</button>
@@ -143,35 +148,48 @@
 
   <div class="output" id="output">
 
-    <div class="out-card">
-      <div class="out-header">
-        <div class="out-header-info">
-          <h2 id="titulo-feed"></h2>
-          <div class="subtitulo" id="titulo-site"></div>
-          <div class="meta-pills" id="meta-pills"></div>
-        </div>
-        <button class="copy-all-btn" onclick="copiarTudo()">copiar tudo</button>
+    <div class="titulos-card">
+      <h3>Títulos</h3>
+
+      <div class="titulo-secao">
+        <div class="titulo-secao-label">Feed / Capa do carrossel</div>
+        <div id="titulos-feed"></div>
       </div>
-      <div class="telas-wrap" id="telas"></div>
-      <div class="legenda-wrap">
-        <div class="legenda-label">
-          Legenda do Instagram
-          <button class="copy-leg-btn" onclick="copiarLegenda()">copiar</button>
-        </div>
-        <div class="legenda-texto" id="legenda"></div>
+
+      <div class="titulo-secao">
+        <div class="titulo-secao-label">Site (SEO)</div>
+        <div id="titulos-site"></div>
       </div>
+
+      <div class="meta-pills" id="meta-pills"></div>
+    </div>
+
+    <div class="bloco-card">
+      <div class="bloco-header">
+        <div class="bloco-label">Carrossel — bloco para copiar</div>
+        <button class="copy-btn" id="copy-carrossel" onclick="copiarBloco('carrossel-texto', 'copy-carrossel')">copiar</button>
+      </div>
+      <textarea class="bloco-textarea" id="carrossel-texto" readonly rows="20"></textarea>
+    </div>
+
+    <div class="bloco-card">
+      <div class="bloco-header">
+        <div class="bloco-label">Legenda do Instagram</div>
+        <button class="copy-btn" id="copy-legenda" onclick="copiarBloco('legenda-texto', 'copy-legenda')">copiar</button>
+      </div>
+      <textarea class="bloco-textarea" id="legenda-texto" readonly rows="6"></textarea>
     </div>
 
     <div class="feedback-card">
       <h3>Refinar <span class="versao-tag" id="versao-tag">v1</span></h3>
       <p class="feedback-desc">Selecione o que quer melhorar ou escreva um pedido livre.</p>
       <div class="chips">
-        <div class="chip" onclick="toggleChip(this)" data-v="quero um texto mais completo em cada tela, mantendo o tom da colaboradora">texto mais completo</div>
+        <div class="chip" onclick="toggleChip(this)" data-v="quero um texto mais completo em cada tela, mantendo o tom original">texto mais completo</div>
         <div class="chip" onclick="toggleChip(this)" data-v="quero menos telas, mais direto ao ponto">menos telas</div>
         <div class="chip" onclick="toggleChip(this)" data-v="quero mais telas para aprofundar melhor o conteúdo">mais telas</div>
-        <div class="chip" onclick="toggleChip(this)" data-v="o título da capa precisa de mais gancho e impacto para o feed">título mais forte</div>
+        <div class="chip" onclick="toggleChip(this)" data-v="preciso de novas opções de título, os atuais não têm gancho suficiente">novos títulos</div>
         <div class="chip" onclick="toggleChip(this)" data-v="a legenda precisa de um tom mais coloquial e próximo, menos formal">legenda mais coloquial</div>
-        <div class="chip" onclick="toggleChip(this)" data-v="o texto está muito diferente do original, mantenha mais fiel ao que a colaboradora escreveu">mais fiel ao original</div>
+        <div class="chip" onclick="toggleChip(this)" data-v="o texto está muito diferente do original, mantenha mais fiel ao que foi escrito">mais fiel ao original</div>
         <div class="chip" onclick="toggleChip(this)" data-v="o CTA da última tela pode ser mais engajador">CTA mais forte</div>
       </div>
       <div class="fb-row">
@@ -184,55 +202,70 @@
 </div>
 
 <script>
-let colabSel = null;
-let legRaw = "";
+let autorSel = null;
 let versao = 1;
 let historico = [];
-let dadosAtuais = null;
 
-const COLABS = {
-  roberta: { nome: "Roberta Weber", arroba: "@robertaweber" },
+const AUTORES = {
+  stl:     { nome: "Steal The Look", arroba: null },
+  roberta: { nome: "Roberta Weber",  arroba: "@robertaweber" },
   miriam:  { nome: "Miriam Spritzer", arroba: "@mispritzer" }
 };
 
-const SYS = `Você é editor(a) de conteúdo do Steal The Look (STL), plataforma brasileira de moda e beleza. Sua função é desdobrar textos de colaboradoras em carrosseis para Instagram + legenda.
+const SYS = `Você é editor(a) de conteúdo do Steal The Look (STL), plataforma brasileira de moda e beleza. Sua função é desdobrar textos em carrosseis para Instagram + legenda.
 
 PRINCÍPIO MAIS IMPORTANTE:
-Mantenha o tom de voz e o texto da colaboradora. Não reescreva — ajuste para caber no formato. O texto deve soar como ela, não como a redação da STL. Preserve expressões, escolhas de palavras e o raciocínio original.
+Mantenha o tom de voz e o texto original. Não reescreva — ajuste para caber no formato. Preserve expressões, escolhas de palavras e o raciocínio original. Sempre comece frases com letra maiúscula, seguindo a norma culta do português brasileiro.
 
-ESTRUTURA DO DESDOBRAMENTO:
-Cada tela tem um subtítulo opcional (quando há mudança de assunto) + texto corrido em prosa. Sem bullet points, sem listas, sem emojis. O texto de cada tela é um parágrafo ou dois do texto original, ajustado para caber em até 450 caracteres.
+TÍTULOS:
+Gere 5 opções de título para o feed e 5 opções para o site. Cada conjunto deve variar em abordagem:
+- Feed: títulos diretos, com gancho, que chamem atenção no Instagram. Podem usar dois-pontos, número ou pergunta. Sem ponto de exclamação. Primeira letra maiúscula, restante conforme norma culta
+- Site (SEO): títulos descritivos, com palavra-chave clara, que funcionem bem em buscas. Primeira letra maiúscula
 
-Exemplo de tela boa:
-Subtítulo: "De execução artesanal"
-Texto: "o pankou é feito a partir de cordas atadas à mão, muitas vezes revestidas por tecidos nobres como cetim ou seda e finalizadas com bordados em shapes distintos. O trabalho dialoga com tradições de amarração e repetição, incorporando ideias de harmonia, equilíbrio e até sorte diretamente na construção das peças."
+FORMATO DE SAÍDA DO CARROSSEL:
+Bloco de texto corrido, com cada tela separada por uma linha em branco. Sem divisores, bullets, numeração ou marcação visual. Cada tela tem:
+- Uma linha de subtítulo em maiúsculas (quando há mudança de assunto) — opcional
+- O texto em prosa, começando com letra maiúscula
+
+Exemplo:
+A NOVA ORDEM DAS MAISONS
+O ano passado foi das estreias, mas 2026 será sobre consolidação. Depois de um 2025 repleto de mudanças, o foco agora é observar como os novos diretores criativos vão se adaptar.
+
+Além disso, após a passagem relâmpago de Dario Vitale na Versace, a especulação sobre quem vai assumir a direção criativa segue em alta.
+
+CENÁRIO ECONÔMICO
+Segundo o State of Fashion da McKinsey, o crescimento global da indústria de moda para 2026 deve ser abaixo do esperado.
 
 REGRAS DO CARROSSEL:
-- Analise o texto e proponha o número ideal de telas (entre 8 e 15) com base nos blocos temáticos naturais. Justifique em justificativa_telas
+- Analise o texto e proponha o número ideal de telas (entre 8 e 15). Justifique em justificativa_telas
 - Máximo 450 caracteres por tela (sem contar o subtítulo)
-- Capa: título direto com gancho, partindo do título original. Máx 80 chars. Sem ponto de exclamação
+- Sem emojis, sem bullet points, sem listas
 - Arco: contexto → desenvolvimento → fechamento com reflexão + CTA
-- Última tela: fechamento natural + CTA sem emoji (ex: salve pra ver depois, arraste e leia)
+- Última tela: fechamento natural + CTA sem emoji (ex: "Salve pra ver depois", "Arraste e leia")
 - Tom jornalístico-editorial, acessível
 
-TÍTULO PARA O FEED:
-- Parte do título original da colaboradora
-- Direto, descritivo, com gancho. Pode usar dois-pontos
-- Tudo minúsculo exceto nomes próprios e marcas
-
 REGRAS DA LEGENDA:
-- 3 parágrafos curtos, tom coloquial, use pra (não para)
-- 1º: gancho instigante — não resume o carrossel, complementa
-- 2º: apresenta a colaboradora — nome e arroba — de forma natural
+- 3 parágrafos curtos, tom coloquial, use "pra" (não "para")
+- 1º: gancho instigante — complementa o carrossel, não resume
+- 2º: quando for colaboradora, apresenta — nome e arroba — de forma natural. Quando for conteúdo STL, apresenta o conteúdo diretamente
 - 3º: CTA + pergunta retórica sobre o tema
 - Sem emojis. Finalizar com #STEALTHELOOK
+- Cada parágrafo começa com letra maiúscula
 
 Responda APENAS em JSON válido, sem markdown, sem backticks:
-{"titulo_feed":"...","titulo_site":"...","total_telas":10,"justificativa_telas":"...","palavra_manychat":"...","legenda":"...\\n\\n...\\n\\n...#STEALTHELOOK","telas":[{"num":"capa","subtitulo":"","texto":"..."},{"num":"1","subtitulo":"Subtítulo","texto":"..."}]}`;
+{
+  "titulos_feed": ["opção 1", "opção 2", "opção 3", "opção 4", "opção 5"],
+  "titulos_site": ["opção 1", "opção 2", "opção 3", "opção 4", "opção 5"],
+  "total_telas": 10,
+  "justificativa_telas": "...",
+  "palavra_manychat": "...",
+  "carrossel": "bloco de texto corrido com todas as telas",
+  "legenda": "parágrafo 1\\n\\nparágrafo 2\\n\\nparágrafo 3\\n\\n#STEALTHELOOK"
+}`;
 
 function sel(id) {
-  colabSel = id;
-  document.querySelectorAll(".colab-card").forEach(c => c.classList.remove("selected"));
+  autorSel = id;
+  document.querySelectorAll(".autor-card").forEach(c => c.classList.remove("selected"));
   document.getElementById("card-" + id).classList.add("selected");
 }
 
@@ -276,23 +309,26 @@ async function chamarAPI(msgs) {
 
 async function gerar() {
   const texto = document.getElementById("texto").value.trim();
-  if (!colabSel) { alert("Selecione a colaboradora."); return; }
+  if (!autorSel) { alert("Selecione a autoria."); return; }
   if (texto.length < 100) { alert("Cole um texto mais completo."); return; }
 
-  const colab = COLABS[colabSel];
+  const autor = AUTORES[autorSel];
   versao = 1;
   historico = [];
   setLoading(true);
   document.getElementById("output").style.display = "none";
 
-  const msg = `Colaboradora: ${colab.nome} (${colab.arroba})\n\nTEXTO:\n${texto}`;
+  const autorInfo = autor.arroba
+    ? `Colaboradora: ${autor.nome} (${autor.arroba})`
+    : `Autoria: ${autor.nome} (conteúdo proprietário)`;
+
+  const msg = `${autorInfo}\n\nTEXTO:\n${texto}`;
   historico.push({ role: "user", content: msg });
 
   try {
     const { parsed, raw } = await chamarAPI(historico);
     historico.push({ role: "assistant", content: raw });
-    dadosAtuais = parsed;
-    render(parsed, colab);
+    render(parsed, autor);
   } catch(e) {
     showErro("Erro: " + e.message);
   } finally {
@@ -316,10 +352,9 @@ async function refinar() {
     const { parsed, raw } = await chamarAPI(historico);
     historico.push({ role: "assistant", content: raw });
     versao++;
-    dadosAtuais = parsed;
     document.querySelectorAll(".chip").forEach(c => c.classList.remove("on"));
     document.getElementById("fb-txt").value = "";
-    render(parsed, COLABS[colabSel]);
+    render(parsed, AUTORES[autorSel]);
   } catch(e) {
     showErro("Erro ao refinar: " + e.message);
     historico.pop();
@@ -328,69 +363,62 @@ async function refinar() {
   }
 }
 
-function render(data, colab) {
-  document.getElementById("versao-tag").textContent = "v" + versao;
-  document.getElementById("titulo-feed").textContent = data.titulo_feed || "";
-  document.getElementById("titulo-site").textContent = "Site: " + (data.titulo_site || "");
+function renderTitulos(containerId, lista) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  (lista || []).forEach((t, i) => {
+    const div = document.createElement("div");
+    div.className = "titulo-opcao";
+    div.innerHTML = `
+      <div class="titulo-num">${i + 1}</div>
+      <div class="titulo-texto">${t}</div>
+      <button class="titulo-copy" onclick="copiarTexto(event, '${t.replace(/'/g, "\\'")}')">copiar</button>
+    `;
+    el.appendChild(div);
+  });
+}
 
+function render(data, autor) {
+  document.getElementById("versao-tag").textContent = "v" + versao;
+
+  renderTitulos("titulos-feed", data.titulos_feed);
+  renderTitulos("titulos-site", data.titulos_site);
+
+  const autorLabel = autor.arroba ? `${autor.nome} · ${autor.arroba}` : autor.nome;
   document.getElementById("meta-pills").innerHTML = `
-    <span class="pill pink">${colab.nome}</span>
-    <span class="pill">${data.total_telas || data.telas?.length} telas</span>
+    <span class="pill pink">${autorLabel}</span>
+    <span class="pill">${data.total_telas || ""} telas</span>
     <span class="pill">manychat: ${data.palavra_manychat || ""}</span>
     ${data.justificativa_telas ? `<span class="pill" style="font-style:italic;">${data.justificativa_telas}</span>` : ""}
   `;
 
-  const telasEl = document.getElementById("telas");
-  telasEl.innerHTML = "";
-  (data.telas || []).forEach(t => {
-    const chars = (t.texto || "").length;
-    const over = chars > 450;
-    const div = document.createElement("div");
-    div.className = "tela-item";
-    div.innerHTML = `
-      <div class="tela-header">
-        <div class="tela-num">${t.num === "capa" ? "capa" : "tela " + t.num}</div>
-        <div class="tela-chars ${over ? "over" : ""}">${chars}/450${over ? " ⚠" : ""}</div>
-      </div>
-      ${t.subtitulo ? `<div class="tela-subtitulo">${t.subtitulo}</div>` : ""}
-      <div class="tela-texto">${t.texto || ""}</div>
-    `;
-    telasEl.appendChild(div);
-  });
+  const carrosselEl = document.getElementById("carrossel-texto");
+  carrosselEl.value = data.carrossel || "";
+  carrosselEl.rows = Math.max(12, (data.carrossel || "").split("\n").length + 4);
 
-  legRaw = data.legenda || "";
-  document.getElementById("legenda").textContent = legRaw;
+  const legendaEl = document.getElementById("legenda-texto");
+  legendaEl.value = data.legenda || "";
+  legendaEl.rows = Math.max(6, (data.legenda || "").split("\n").length + 2);
 
   document.getElementById("output").style.display = "block";
   document.getElementById("output").scrollIntoView({ behavior: "smooth" });
 }
 
-function copiarLegenda() {
-  navigator.clipboard.writeText(legRaw).then(() => {
-    const btn = document.querySelector(".copy-leg-btn");
+function copiarBloco(id, btnId) {
+  const val = document.getElementById(id).value;
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById(btnId);
     btn.textContent = "copiado!";
     setTimeout(() => btn.textContent = "copiar", 2000);
   });
 }
 
-function copiarTudo() {
-  if (!dadosAtuais) return;
-  const d = dadosAtuais;
-
-  let txt = `TÍTULO DO FEED\n${d.titulo_feed || ""}\n\nTÍTULO DO SITE\n${d.titulo_site || ""}\n\nPALAVRA MANYCHAT\n${d.palavra_manychat || ""}\n\n---\nTELAS DO CARROSSEL\n---\n\n`;
-
-  (d.telas || []).forEach(t => {
-    txt += `${t.num === "capa" ? "CAPA" : "TELA " + t.num}\n`;
-    if (t.subtitulo) txt += `${t.subtitulo}\n`;
-    txt += `${t.texto}\n\n`;
-  });
-
-  txt += `---\nLEGENDA DO INSTAGRAM\n---\n\n${d.legenda || ""}`;
-
-  navigator.clipboard.writeText(txt).then(() => {
-    const btn = document.querySelector(".copy-all-btn");
+function copiarTexto(event, texto) {
+  event.stopPropagation();
+  navigator.clipboard.writeText(texto).then(() => {
+    const btn = event.target;
     btn.textContent = "copiado!";
-    setTimeout(() => btn.textContent = "copiar tudo", 2000);
+    setTimeout(() => btn.textContent = "copiar", 2000);
   });
 }
 </script>

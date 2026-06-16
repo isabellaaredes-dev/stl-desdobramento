@@ -183,6 +183,7 @@
         <div class="chip" onclick="toggleChip(this)" data-v="a legenda precisa de um tom mais coloquial e próximo, menos formal">legenda mais coloquial</div>
         <div class="chip" onclick="toggleChip(this)" data-v="o texto está muito diferente do original, mantenha mais fiel ao que foi escrito">mais fiel ao original</div>
         <div class="chip" onclick="toggleChip(this)" data-v="o CTA da última tela pode ser mais engajador">CTA mais forte</div>
+        <div class="chip" onclick="toggleChip(this)" data-v="tem título demais nas telas, use apenas quando realmente necessário">menos títulos por tela</div>
       </div>
       <div class="fb-row">
         <textarea id="fb-txt" rows="2" placeholder="Ou escreva um pedido livre... ex: 'o tom ficou muito formal, quero mais leve'"></textarea>
@@ -209,7 +210,7 @@ const SYS = `Você é editor(a) de conteúdo do Steal The Look (STL), plataforma
 PRINCÍPIO MAIS IMPORTANTE:
 Mantenha o tom de voz e o texto original. Não reescreva — ajuste para caber no formato. Preserve expressões, escolhas de palavras e o raciocínio original. Sempre comece frases com letra maiúscula, seguindo a norma culta do português brasileiro.
 
-TÍTULOS:
+TÍTULOS GERAIS:
 Gere 5 opções de título para o feed e 5 opções para o site. Cada conjunto deve variar em abordagem:
 - Feed: títulos diretos, com gancho, que chamem atenção no Instagram. Podem usar dois-pontos, número ou pergunta. Sem ponto de exclamação. Primeira letra maiúscula
 - Site (SEO): títulos descritivos, com palavra-chave clara, que funcionem bem em buscas. Primeira letra maiúscula
@@ -217,12 +218,22 @@ Gere 5 opções de título para o feed e 5 opções para o site. Cada conjunto d
 FORMATO DE SAÍDA DO CARROSSEL:
 O carrossel deve ser entregue como um bloco de texto corrido. Cada tela é separada por uma linha em branco e segue esta estrutura de hierarquia:
 
-[TELA N — TEMA] (use tema em maiúsculas quando há mudança de assunto; omita se não houver)
-Título: frase curta de gancho que ancora a tela — sempre presente
+[TELA N — TEMA] (use tema em maiúsculas quando há mudança de assunto; omita o tema se a tela continuar o mesmo assunto da anterior)
+Título: frase curta de gancho — USE APENAS QUANDO PERTINENTE (ver critério abaixo)
 Subtítulo: complemento opcional quando o título precisa de mais camada — omita se não for necessário
 Texto em prosa corrida, começando com letra maiúscula, fiel ao original.
 
-Exemplo de saída:
+CRITÉRIO PARA INCLUIR TÍTULO NA TELA — IMPORTANTE, NÃO USE TÍTULO EM TODA TELA:
+A capa sempre tem título (é o título principal do carrossel). Para as demais telas, inclua título apenas quando:
+- A tela abre um novo bloco temático ou vira de assunto
+- A tela ganha clareza e gancho real com uma frase de entrada
+Não inclua título quando:
+- A tela é continuação direta do parágrafo anterior, sem mudança de assunto
+- O texto já é autoexplicativo e o título seria redundante ou repetitivo
+- É uma tela de transição rápida ou exemplo adicional dentro do mesmo bloco temático
+Na prática, espere a maioria das telas (exceto capa e aberturas de bloco temático) NÃO ter título.
+
+Exemplo de saída (note que a tela 2 não tem título nem novo tema, pois é continuação direta da tela 1):
 
 [CAPA]
 Título: Nó chinês: o fechamento histórico que voltou a dominar as jaquetas em 2026
@@ -231,15 +242,16 @@ Título: Nó chinês: o fechamento histórico que voltou a dominar as jaquetas e
 Título: A tendência que você vai ver em todo lugar
 O fechamento conhecido como nó chinês, ou frog closure em inglês, volta com tudo em 2026. O retorno é fruto do fascínio cada vez mais forte por vintage e do aumento de referências históricas nas passarelas.
 
-[TELA 2 — ORIGEM]
-Título: Mas afinal, de onde surgiu?
-Subtítulo: Uma história que vem da dinastia Qing
-Original da China, o nó é parte indissociável do vestuário tradicional chinês, presente em qipaos e roupas da dinastia Qing. Oficialmente chamado de Pankou, o fechamento transcende o impacto decorativo, sendo parte estrutural da roupa e símbolo de status e refinamento.
+[TELA 2]
+Original da China, o nó é parte indissociável do vestuário tradicional chinês, presente em qipaos e roupas da dinastia Qing. Oficialmente chamado de Pankou, o fechamento transcende o impacto decorativo.
+
+[TELA 3 — ARTESANATO]
+Título: Um trabalho inteiramente manual
+De execução artesanal, o pankou é feito a partir de cordas atadas à mão, muitas vezes revestidas por tecidos nobres como cetim ou seda.
 
 REGRAS DO CARROSSEL:
 - Analise o texto e proponha o número ideal de telas (entre 8 e 15) com base nos blocos temáticos naturais. Justifique em justificativa_telas
 - Máximo 450 caracteres por tela (sem contar título e subtítulo)
-- Título sempre presente em todas as telas, inclusive na capa
 - Subtítulo apenas quando o título precisa de complemento ou quando o conteúdo tem duas camadas de informação
 - Sem emojis, sem bullet points, sem listas
 - Arco: contexto → desenvolvimento → fechamento com reflexão + CTA
